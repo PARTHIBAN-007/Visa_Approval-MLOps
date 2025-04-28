@@ -1,2 +1,6 @@
 data:
   data_path: data\Visadataset.csv
+
+
+model:
+  model_path: model\LightGBM.pkl
