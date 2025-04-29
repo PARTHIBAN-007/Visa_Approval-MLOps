@@ -3,6 +3,7 @@ import yaml
 import lightgbm as lgb
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import mlflow
+import mlflow.lightgbm
 class ModelEvaluation:
     def __init__(self):
         self.config = self.load_config()
@@ -23,8 +24,9 @@ class ModelEvaluation:
         acc = accuracy_score(y_test,y_pred)
         report = classification_report(y_test,y_pred)
         cm = confusion_matrix(y_test,y_pred)  
+        mlflow.set_experiment("Visa Approval {}")
         with mlflow.start_run():
-            mlflow.log_param("model_type", "LightGBM")
+            mlflow.lightgbm.log_model(self.model, artifact_path="model")
             mlflow.log_params(self.config["model_params"])
             mlflow.log_metric("accuracy", acc)
             mlflow.log_metric("f1_score", report["f1-score"])
