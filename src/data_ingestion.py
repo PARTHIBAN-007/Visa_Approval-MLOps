@@ -7,7 +7,7 @@ class DataIngestion:
     def __init__(self):
         self.config = self.load_config()
     def load_config(self):
-        with open("config.yaml", "r") as file:
+        with open("config.yml", "r") as file:
             config = yaml.safe_load(file)
             return config
     def load_data(self) -> Tuple[pd.DataFrame]:

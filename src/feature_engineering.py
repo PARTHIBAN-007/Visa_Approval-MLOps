@@ -1,5 +1,4 @@
-import pandas 
-
+import pandas as pd
 class FeatureEngineering:
     def split_data(self,df:pd.DataFrame):
         x = df.drop(columns="case_status")
