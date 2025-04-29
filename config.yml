@@ -4,3 +4,8 @@ data:
 
 model:
   model_path: model\LightGBM.pkl
+
+model_params:
+  n_estimators: 170
+  max_depth: 10
+  learning_rate: 0.0002
