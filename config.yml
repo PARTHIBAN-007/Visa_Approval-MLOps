@@ -1,12 +1,12 @@
 data:
-  data_path: data\Visadataset.csv
+  data_path: data/Visadataset.csv
 
 
 model:
-  model_path: model\LightGBM.pkl
+  model_path: model/LightGBM.pkl
 
 encoder:
-  encoder_path: model\encoder.pkl
+  encoder_path: model/encoder.pkl
   categorical_cols: ['continent', 'education_of_employee', 'has_job_experience', 'requires_job_training', 'region_of_employment', 'unit_of_wage', 'full_time_position'] 
 model_params:
   n_estimators: 170

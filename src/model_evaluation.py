@@ -5,6 +5,12 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 import mlflow
 import mlflow.lightgbm
 import joblib
+from mlflow.models.signature import infer_signature
+
+
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("Visa Approval-MLOps")
+
 class ModelEvaluation:
     def __init__(self):
         self.config = self.load_config()
@@ -21,19 +27,33 @@ class ModelEvaluation:
         return model
     
     def evaluate_model(self,x_test:pd.DataFrame,y_test:pd.Series):
+        
         y_pred = self.model.predict(x_test)
         acc = accuracy_score(y_test,y_pred)
-        report = classification_report(y_test,y_pred)
+        report = classification_report(y_test,y_pred, zero_division=0)
         cm = confusion_matrix(y_test,y_pred)  
-        mlflow.set_experiment("Visa Approval {}")
         with mlflow.start_run():
-            mlflow.lightgbm.log_model(self.model, artifact_path="model")
+            input_example = x_test.iloc[:1]
+            signature = infer_signature(x_test, y_pred)
+
+            mlflow.lightgbm.log_model(
+                lgb_model=self.model,
+                artifact_path="model",
+                signature=signature,
+                input_example=input_example
+            )
+
             mlflow.log_params(self.config["model_params"])
+
+            acc = accuracy_score(y_test, y_pred)
+            f1 = f1_score(y_test, y_pred, zero_division=1)
+            precision = precision_score(y_test, y_pred, zero_division=1)
+            recall = recall_score(y_test, y_pred, zero_division=1)
+
             mlflow.log_metric("accuracy", acc)
-            mlflow.log_metric("f1_score", f1_score(y_test,y_pred))
-            mlflow.log_metric("precision", precision_score(y_test,y_pred))
-            mlflow.log_metric("recall", recall_score(y_test,y_pred))
-        
-            
-        
-        
+            mlflow.log_metric("f1_score", f1)
+            mlflow.log_metric("precision", precision)
+            mlflow.log_metric("recall", recall)
+                    
+                
+                

@@ -3,7 +3,6 @@ from src.data_cleaning import DataCleaning
 from src.feature_engineering import FeatureEngineering
 from src.model_training import ModelTraining
 from src.model_evaluation import ModelEvaluation
-from src.model_registry import ModelRegistry
 from sklearn.model_selection import train_test_split
 
 def main():
@@ -13,7 +12,8 @@ def main():
     print("Data Ingestion Completed")
     # Data Cleaning
     data_cleaning = DataCleaning()  
-    cleaned_data,encoder = data_cleaning.clean_data(df)
+    cleaned_data = data_cleaning.clean_data(df)
+    data_cleaning.register_encoder()
     print("Data Cleaning Completed")
 
     feature_engineering  = FeatureEngineering()
@@ -24,17 +24,14 @@ def main():
     # Model Training
     model_training = ModelTraining()
     model = model_training.train_model(x_train, y_train)
+    model_training.register_model(model)
     print("Model Training Completed")
 
     # Model Evaluation
     model_evaluation = ModelEvaluation()
     model_evaluation.evaluate_model(x_test, y_test)
     print("Model Evaluation Completed")
-    # Model Registry
-    model_registry = ModelRegistry()
-    # model_registry.register_encoder(encoder)
-    model_registry.register_model(model,encoder)
-    print("Model registered successfully.")
+   
 
 if __name__=="__main__":
     main()

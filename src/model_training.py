@@ -1,6 +1,7 @@
 import pandas as pd
 import lightgbm as lgb
 import yaml
+import joblib
 class ModelTraining:
     def __init__(self):
         self.config = self.load_config()
@@ -19,4 +20,9 @@ class ModelTraining:
     def train_model(self,x_train:pd.DataFrame,y_train:pd.Series):
         self.lgbm.fit(x_train, y_train)
         return self.lgbm
+    
+    def register_model(self,model):
+        model_path = self.config["model"]["model_path"]
+        joblib.dump(model, model_path)
+        print(f"Model saved to {model_path}")
     

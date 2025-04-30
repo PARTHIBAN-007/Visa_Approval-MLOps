@@ -6,6 +6,12 @@ import joblib
 class DataCleaning:
     def __init__(self):
         self.encoders = {}
+        self.config = self.load_config()
+
+    def load_config(self):
+        with open("config.yml", "r") as file:
+            config = yaml.safe_load(file)
+            return config
 
         
     def clean_data(self, df: pd.DataFrame):
@@ -27,6 +33,11 @@ class DataCleaning:
             df[columns] = le.fit_transform(df[columns])
             self.encoders[columns] = le
                 
-        return df,self.encoders
+        return df
+    
+    def register_encoder(self):
+        encoder_path = self.config["encoder"]["encoder_path"]
+        joblib.dump(self.encoders, encoder_path)
+        print(f"Encoder saved to {encoder_path}")
     
     

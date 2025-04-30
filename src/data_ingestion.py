@@ -10,7 +10,7 @@ class DataIngestion:
         with open("config.yml", "r") as file:
             config = yaml.safe_load(file)
             return config
-    def load_data(self) -> Tuple[pd.DataFrame]:
+    def load_data(self):
         """
         Load data from the specified source in the config file.
         Returns a tuple of DataFrames (train, test).

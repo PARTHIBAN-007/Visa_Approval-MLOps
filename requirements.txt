@@ -1,7 +1,12 @@
 pandas
 numpy 
-streamlit 
+matplotlib
+seaborn
 scikit-learn
+lightgbm==4.6.0
+mlflow
 fastapi
 uvicorn
-mlflow
+pydantic
+streamlit 
+
