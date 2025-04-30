@@ -5,8 +5,7 @@ from sklearn.preprocessing import  LabelEncoder
 import joblib
 class DataCleaning:
     def __init__(self):
-
-        self.encoder = LabelEncoder()
+        self.encoders = {}
 
         
     def clean_data(self, df: pd.DataFrame):
@@ -21,11 +20,13 @@ class DataCleaning:
 
         numeric_features = df.select_dtypes(exclude="object").columns
         categoric_features = df.select_dtypes(include="object").columns
+        print(categoric_features)
             
         for columns in categoric_features:
-            df[columns] = self.encoder.fit_transform(df[columns])
-        joblib.dump(self.encoder, "model/encoder.pkl")
-                      
-        return df
+            le = LabelEncoder()
+            df[columns] = le.fit_transform(df[columns])
+            self.encoders[columns] = le
+                
+        return df,self.encoders
     
     

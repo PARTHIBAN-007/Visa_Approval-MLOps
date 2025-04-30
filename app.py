@@ -3,11 +3,9 @@ from pydantic import BaseModel
 from src.model_inference import ModelInference
 import pandas as pd
 
-# Initialize FastAPI app and model
 app = FastAPI()
 model = ModelInference()
 
-# Pydantic input schema
 class InputData(BaseModel):
     continent: str
     education_of_employee: str
@@ -22,15 +20,9 @@ class InputData(BaseModel):
 
 @app.post("/predict")
 def predict(data: InputData):
-    try:
-        # Convert input to DataFrame
-        input_dict = data.dict()
-        df = pd.DataFrame([input_dict])
+    input_dict = data.dict()
+    df = pd.DataFrame([input_dict])
 
-        # Call prediction method
-        prediction = model.predict(df)
-
-        # Return result
-        return {"prediction": prediction}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    prediction = model.predict(df)
+ 
+    return {"prediction":str(prediction[0])}

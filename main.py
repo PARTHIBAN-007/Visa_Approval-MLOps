@@ -13,7 +13,7 @@ def main():
     print("Data Ingestion Completed")
     # Data Cleaning
     data_cleaning = DataCleaning()  
-    cleaned_data = data_cleaning.clean_data(df)
+    cleaned_data,encoder = data_cleaning.clean_data(df)
     print("Data Cleaning Completed")
 
     feature_engineering  = FeatureEngineering()
@@ -33,7 +33,7 @@ def main():
     # Model Registry
     model_registry = ModelRegistry()
     # model_registry.register_encoder(encoder)
-    model_registry.register_model(model)
+    model_registry.register_model(model,encoder)
     print("Model registered successfully.")
 
 if __name__=="__main__":

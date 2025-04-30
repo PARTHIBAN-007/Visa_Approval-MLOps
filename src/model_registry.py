@@ -1,6 +1,6 @@
-import joblib
 import os
 import yaml
+import pickle
 class ModelRegistry:
     def __init__(self):
         self.config = self.load_config()
@@ -15,9 +15,13 @@ class ModelRegistry:
     #     encoder_path = self.config["encoder"]["encoder_path"]
     #     joblib.dump(encoder, encoder_path)
     
-    def register_model(self,model):
-        model_path = self.config["model"]["model_path"]
-        joblib.dump(model, model_path)
+    def register_model(self,model,label):
+        artifacts  = {
+            'model':model,
+            'label':label
+        }
+        with open("./model/model1.pkl", 'wb') as file:
+            pickle.dump(artifacts, file)
 
 
         

@@ -3,7 +3,6 @@ import requests
 
 st.title("H1B Visa Case Status Prediction")
 
-# Input fields
 continent = st.selectbox("Continent", ['Asia', 'Africa', 'North America', 'Europe', 'South America', 'Oceania'])
 education = st.selectbox("Education Level", ['High School', "Master's", "Bachelor's", 'Doctorate'])
 job_exp = st.radio("Has Job Experience?", ['Y', 'N'])
@@ -16,7 +15,6 @@ no_of_employees = st.number_input("Number of Employees", min_value=0)
 prevailing_wage = st.number_input("Prevailing Wage", min_value=0.0)
 company_age = st.number_input("Company Age (years)", min_value=0)
 
-# Construct input data (no list wrapping!)
 input_dict = {
     'continent': continent,
     'education_of_employee': education,
@@ -32,7 +30,6 @@ input_dict = {
 
 if st.button("Predict Case Status"):
     response = requests.post("http://localhost:8000/predict", json=input_dict)
-
     if response.status_code == 200:
         result = response.json()
         st.write("Prediction:", "✅ Certified" if result['prediction'] == "Certified" else "❌ Denied")
