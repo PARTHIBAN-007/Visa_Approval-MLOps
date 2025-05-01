@@ -9,9 +9,10 @@ This project is a full-stack machine learning application for predicting visa ap
 -  Containerization with Docker
 -  CI/CD with GitHub Actions
 -  Deployment on AWS EC2 + ECR
+--------------------------------------------------------------------------------------
 
 
-## **Tech Stack **
+## Tech Stack 
 - **Programming** - Python(Pandas,Scikit-Learn)-3.12.4
 - **ML Algorithm** - LightGBM
 - **ML Interpreation** - SHAP
@@ -22,6 +23,7 @@ This project is a full-stack machine learning application for predicting visa ap
 - **CI/CD** - Github Actions
 - **Containerization** - AWS ECR
 - **Model Deployment** - AWS EC2(t2.medium)
+--------------------------------------------------------------------------------------
 
 
 ##  Run Locally with Docker
@@ -50,9 +52,11 @@ Streamlit: http://localhost:8501
 FastAPI Docs: http://localhost:8000/docs
 MLflow UI: http://localhost:5000
 ```
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 
-##  Run Locally with Docker
 
+##  Run Locally without Docker
 
 ### 1.Clone the repository
 
