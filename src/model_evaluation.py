@@ -26,12 +26,17 @@ class ModelEvaluation:
         model = joblib.load(model_path)
         return model
     
-    def evaluate_model(self,x_test:pd.DataFrame,y_test:pd.Series):
-        
+    def evaluate_model(self, x_test: pd.DataFrame, y_test: pd.Series):
         y_pred = self.model.predict(x_test)
-        acc = accuracy_score(y_test,y_pred)
-        report = classification_report(y_test,y_pred, zero_division=0)
-        cm = confusion_matrix(y_test,y_pred)  
+        acc = accuracy_score(y_test, y_pred)
+        report = classification_report(y_test, y_pred, zero_division=0)
+        cm = confusion_matrix(y_test, y_pred)
+
+        tn, fp, fn, tp = cm.ravel()
+        precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+        recall = tp / (tp + fn) if (tp + fn) != 0 else 0
+        f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+
         with mlflow.start_run():
             input_example = x_test.iloc[:1]
             signature = infer_signature(x_test, y_pred)
@@ -45,15 +50,7 @@ class ModelEvaluation:
 
             mlflow.log_params(self.config["model_params"])
 
-            acc = accuracy_score(y_test, y_pred)
-            f1 = f1_score(y_test, y_pred, zero_division=1)
-            precision = precision_score(y_test, y_pred, zero_division=1)
-            recall = recall_score(y_test, y_pred, zero_division=1)
-
             mlflow.log_metric("accuracy", acc)
             mlflow.log_metric("f1_score", f1)
             mlflow.log_metric("precision", precision)
             mlflow.log_metric("recall", recall)
-                    
-                
-                
